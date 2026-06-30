@@ -1,0 +1,25 @@
+{
+  "name": "EvalForge",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "postCreateCommand": "pip install -e \".[dev]\" && pre-commit install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "charliermarsh.ruff",
+        "stkb.rewrap"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": ".venv/bin/python",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit"
+        },
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff"
+        }
+      }
+    }
+  }
+}

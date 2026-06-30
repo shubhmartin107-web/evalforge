@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  evalforge:
+    build: .
+    ports:
+      - "7860:7860"
+    volumes:
+      - evalforge_data:/app/evalforge_data
+      - ./examples:/app/examples:ro
+    env_file:
+      - .env
+    environment:
+      - EVALFORGE_DB_PATH=/app/evalforge_data/evalforge.db
+      - EVALFORGE_DATA_DIR=/app/evalforge_data
+    command: ["serve", "--host", "0.0.0.0", "--port", "7860"]
+
+volumes:
+  evalforge_data:

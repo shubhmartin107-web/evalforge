@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EvalForge Report - {{ run.id[:8] }}</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f1f5f9; color: #1e293b; padding: 24px; }
+  .container { max-width: 960px; margin: 0 auto; }
+  .card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  h1 { font-size: 24px; color: #2563eb; margin-bottom: 4px; }
+  h2 { font-size: 18px; color: #334155; margin-bottom: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+  h3 { font-size: 15px; color: #475569; margin-bottom: 8px; }
+  .meta { color: #64748b; font-size: 13px; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+  th { color: #64748b; font-weight: 600; background: #f8fafc; }
+  .success { color: #059669; font-weight: 600; }
+  .failure { color: #dc2626; font-weight: 600; }
+  .step { padding: 12px 16px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #e2e8f0; background: #fafafa; }
+  .step-thought { border-left-color: #6366f1; }
+  .step-tool_call { border-left-color: #f59e0b; }
+  .step-tool_result { border-left-color: #10b981; }
+  .step-output { border-left-color: #2563eb; }
+  .step-error { border-left-color: #ef4444; background: #fef2f2; }
+  .step-system { border-left-color: #64748b; }
+  .step-header { font-size: 13px; color: #64748b; margin-bottom: 4px; }
+  .step-content { font-size: 14px; line-height: 1.6; white-space: pre-wrap; font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padding: 8px 12px; border-radius: 4px; margin: 4px 0; max-height: 300px; overflow-y: auto; }
+  .detail { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+  .diagnostic { padding: 10px 14px; margin: 6px 0; border-radius: 6px; border-left: 4px solid; font-size: 14px; }
+  .diag-info { border-left-color: #3b82f6; background: #eff6ff; }
+  .diag-warning { border-left-color: #f59e0b; background: #fffbeb; }
+  .diag-error { border-left-color: #ef4444; background: #fef2f2; }
+  .diag-critical { border-left-color: #7c3aed; background: #f5f3ff; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-pass { background: #dcfce7; color: #059669; }
+  .badge-fail { background: #fef2f2; color: #dc2626; }
+  .badge-pending { background: #f8fafc; color: #64748b; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .stat { text-align: center; padding: 16px; }
+  .stat-value { font-size: 28px; font-weight: 700; }
+  .stat-label { font-size: 12px; color: #64748b; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h1>EvalForge Run Report</h1>
+    <p class="meta">Run ID: <code>{{ run.id }}</code> &middot; Created: {{ run.created_at[:10] if run.created_at else "N/A" }}</p>
+    <p class="meta">Status: <span class="badge badge-pass" if run.metrics.success else "badge badge-fail" else "badge badge-pending">{% if run.metrics.success %}Completed{% elif run.status == "failed" %}Failed{% else %}Running{% endif %}</span></p>
+  </div>
+
+  <div class="card">
+    <h2>Metrics</h2>
+    <div class="grid-3">
+      <div class="stat"><div class="stat-value">{{ "%.0f"|format(run.metrics.success_score * 100) }}%</div><div class="stat-label">Score</div></div>
+      <div class="stat"><div class="stat-value">{{ run.metrics.step_count }}</div><div class="stat-label">Steps</div></div>
+      <div class="stat"><div class="stat-value">{{ run.metrics.tool_call_count }}</div><div class="stat-label">Tool Calls</div></div>
+      <div class="stat"><div class="stat-value">{{ run.metrics.error_count }}</div><div class="stat-label">Errors</div></div>
+      <div class="stat"><div class="stat-value">${{ "%.6f"|format(run.metrics.total_cost_usd) }}</div><div class="stat-label">Cost</div></div>
+      <div class="stat"><div class="stat-value">{{ "%.0f"|format(run.metrics.total_latency_ms) }}ms</div><div class="stat-label">Latency</div></div>
+    </div>
+    <table>
+      <tr><th>Metric</th><th>Value</th></tr>
+      <tr><td>Total Tokens</td><td>{{ run.metrics.total_tokens }} ({{ run.metrics.input_tokens }} in / {{ run.metrics.output_tokens }} out)</td></tr>
+      <tr><td>Avg Step Latency</td><td>{{ "%.0f"|format(run.metrics.avg_step_latency_ms) }}ms</td></tr>
+      <tr><td>Efficiency Score</td><td>{{ "%.1f"|format(run.metrics.efficiency_score) }}%</td></tr>
+    </table>
+  </div>
+
+  {% if diagnostics %}
+  <div class="card">
+    <h2>Diagnostics ({{ diagnostics|length }})</h2>
+    {% for d in diagnostics %}
+    <div class="diagnostic diag-{{ d.severity.value }}">
+      <strong>{{ d.title }}</strong> ({{ d.category.value }})
+      <p>{{ d.description[:200] }}</p>
+      {% if d.recommendation %}<p style="font-size:13px;color:#64748b;margin-top:4px;">💡 {{ d.recommendation }}</p>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if steps %}
+  <div class="card">
+    <h2>Trace ({{ steps|length }} steps)</h2>
+    {% for step in steps %}
+    <div class="step step-{{ step.step_type.value }}">
+      <div class="step-header">Step {{ step.step_number }} &middot; {{ step.step_type.value }} &middot; {{ step.timestamp[:19] }}</div>
+      {% if step.content %}
+      <div class="step-content">{{ step.content[:2000] }}</div>
+      {% endif %}
+      {% if step.tool_name %}
+      <div class="detail">🔧 Tool: <code>{{ step.tool_name }}</code></div>
+      {% endif %}
+      {% if step.tool_output %}
+      <div class="step-content">{{ step.tool_output[:500] }}</div>
+      {% endif %}
+      {% if step.error_message %}
+      <div class="detail" style="color:#dc2626;">❌ {{ step.error_message }}</div>
+      {% endif %}
+      <div class="detail">
+        {% if step.token_count %}🔤 {{ step.token_count }} tokens{% endif %}
+        {% if step.cost_usd %} &middot; 💰 ${{ "%.6f"|format(step.cost_usd) }}{% endif %}
+        {% if step.latency_ms %} &middot; ⏱ {{ "%.0f"|format(step.latency_ms) }}ms{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="card" style="text-align:center;color:#94a3b8;font-size:12px;padding:16px;">
+    Generated by EvalForge &middot; Open Source Agent Evaluation Platform
+  </div>
+</div>
+</body>
+</html>

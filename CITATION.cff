@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+title: "EvalForge: Agent Evaluation & Benchmarking Platform"
+message: "If you use EvalForge in your research, please cite it."
+type: software
+authors:
+  - name: "EvalForge Contributors"
+    affiliation: "Anthropic"
+date-released: 2026-06-30
+version: 1.0.0
+repository-code: "https://github.com/anthropics/evalforge"
+license: MIT
