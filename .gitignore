@@ -41,3 +41,10 @@ evalforge.log
 
 # HuggingFace Spaces
 spaces/data/
+
+# Generated reports
+evalforge_report_*
+
+# Environment files
+.env
+.env.local
