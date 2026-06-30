@@ -4,7 +4,7 @@
 
 ```bash
 # Install from source
-git clone https://github.com/anthropics/evalforge.git
+git clone https://github.com/shubhmartin107-web/evalforge.git
 cd evalforge
 pip install -e .
 

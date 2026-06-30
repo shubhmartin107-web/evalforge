@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in EvalForge, please report it privately by emailing security@anthropic.com.
+If you discover a security vulnerability in EvalForge, please open a private vulnerability report at https://github.com/shubhmartin107-web/evalforge/security/advisories/new
 
 Please do **not** report security vulnerabilities through public GitHub issues.
 

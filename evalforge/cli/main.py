@@ -32,7 +32,8 @@ def init():
     """Initialize EvalForge database and config."""
     init_db()
     rprint("[green]✅ EvalForge initialized successfully![/green]")
-    rprint("   Database ready at", init_db.__module__)
+    from ..storage.db import get_db_path
+    rprint(f"   Database ready at [bold]{get_db_path()}[/bold]")
 
 
 @app.command()

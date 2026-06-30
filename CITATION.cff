@@ -7,5 +7,5 @@ authors:
     affiliation: "Anthropic"
 date-released: 2026-06-30
 version: 1.0.0
-repository-code: "https://github.com/anthropics/evalforge"
+repository-code: "https://github.com/shubhmartin107-web/evalforge"
 license: MIT

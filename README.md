@@ -11,12 +11,12 @@
   <p>
     <a href="https://pypi.org/project/evalforge/"><img src="https://img.shields.io/pypi/v/evalforge?color=2563eb&style=flat-square" alt="PyPI"></a>
     <a href="https://pypi.org/project/evalforge/"><img src="https://img.shields.io/pypi/pyversions/evalforge?color=2563eb&style=flat-square" alt="Python"></a>
-    <a href="https://github.com/anthropics/evalforge/actions"><img src="https://img.shields.io/github/actions/workflow/status/anthropics/evalforge/ci.yml?branch=main&style=flat-square" alt="CI"></a>
-    <a href="https://codecov.io/gh/anthropics/evalforge"><img src="https://img.shields.io/codecov/c/github/anthropics/evalforge?style=flat-square" alt="Coverage"></a>
-    <a href="LICENSE"><img src="https://img.shields.io/github/license/anthropics/evalforge?color=2563eb&style=flat-square" alt="License"></a>
-    <a href="https://github.com/astral-sh/ruff"><img src="https://img.shields.io/badge/code_style-ruff-2563eb?style=flat-square" alt="Ruff"></a>
-    <a href="https://github.com/pre-commit/pre-commit"><img src="https://img.shields.io/badge/pre--commit-enabled-2563eb?style=flat-square" alt="pre-commit"></a>
-    <a href="https://github.com/anthropics/evalforge"><img src="https://img.shields.io/github/stars/anthropics/evalforge?style=flat-square&color=2563eb" alt="Stars"></a>
+    <a href="https://github.com/shubhmartin107-web/evalforge/actions"><img src="https://img.shields.io/github/actions/workflow/status/shubhmartin107-web/evalforge/ci.yml?branch=main&style=flat-square" alt="CI"></a>
+    <a href="https://codecov.io/gh/shubhmartin107-web/evalforge"><img src="https://img.shields.io/codecov/c/github/shubhmartin107-web/evalforge?style=flat-square" alt="Coverage"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/github/license/shubhmartin107-web/evalforge?color=2563eb&style=flat-square" alt="License"></a>
+    <a href="https://pypi.org/project/evalforge/"><img src="https://img.shields.io/pypi/v/evalforge?style=flat-square&color=2563eb" alt="PyPI"></a>
+    <a href="https://pypi.org/project/evalforge/"><img src="https://img.shields.io/pypi/pyversions/evalforge?style=flat-square" alt="Python Versions"></a>
+    <a href="https://github.com/shubhmartin107-web/evalforge"><img src="https://img.shields.io/github/stars/shubhmartin107-web/evalforge?style=flat-square&color=2563eb" alt="Stars"></a>
   </p>
   <br/>
   <p>
@@ -289,7 +289,7 @@ Any agent framework can be evaluated:
 ## Development
 
 ```bash
-git clone https://github.com/anthropics/evalforge.git
+git clone https://github.com/shubhmartin107-web/evalforge.git
 cd evalforge
 pip install -e ".[dev]"
 ```
@@ -310,7 +310,7 @@ MIT — See [LICENSE](LICENSE) for details.
 <div align="center">
   <p style="color:#64748b;font-size:14px;">
     Built for the agentic AI community · 
-    <a href="https://github.com/anthropics/evalforge">GitHub</a> · 
+    <a href="https://github.com/shubhmartin107-web/evalforge">GitHub</a> · 
     <a href="https://huggingface.co/spaces">Try on HF Spaces</a>
   </p>
 </div>

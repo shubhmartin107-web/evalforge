@@ -50,10 +50,10 @@ dev = [
 all = ["evalforge[dev]"]
 
 [project.urls]
-Homepage = "https://github.com/anthropics/evalforge"
-Repository = "https://github.com/anthropics/evalforge"
-Documentation = "https://github.com/anthropics/evalforge/tree/main/docs"
-Issues = "https://github.com/anthropics/evalforge/issues"
+Homepage = "https://github.com/shubhmartin107-web/evalforge"
+Repository = "https://github.com/shubhmartin107-web/evalforge"
+Documentation = "https://github.com/shubhmartin107-web/evalforge/tree/main/docs"
+Issues = "https://github.com/shubhmartin107-web/evalforge/issues"
 
 [project.scripts]
 evalforge = "evalforge.cli.main:app"
